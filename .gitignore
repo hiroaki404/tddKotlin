@@ -1,0 +1,19 @@
+# IntelliJ
+*.iml
+.idea/*
+
+# generated files
+build/
+gen/
+out/
+*.apk
+
+# Gradle cache
+.gradle
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx
+
+local.properties

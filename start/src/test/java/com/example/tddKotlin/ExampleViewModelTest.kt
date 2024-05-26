@@ -30,7 +30,6 @@ class ExampleViewModelTest {
     fun `鳥を取得できる`() = runTest {
         assertEquals(
             ExampleUiState(
-                selectedBird = null,
                 selectedSeason = null,
                 birds = listOf(
                     suzume,

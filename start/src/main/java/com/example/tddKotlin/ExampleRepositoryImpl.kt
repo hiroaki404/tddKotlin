@@ -6,7 +6,7 @@ import com.example.tddKotlin.model.suzume
 import com.example.tddKotlin.model.tsubame
 
 class ExampleRepository {
-    fun getBirds(): List<Bird> {
+    suspend fun getBirds(): List<Bird> {
         return listOf(suzume, tsubame, magamo)
     }
 }

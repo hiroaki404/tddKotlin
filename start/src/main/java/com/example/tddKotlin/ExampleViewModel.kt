@@ -1,6 +1,7 @@
 package com.example.tddKotlin
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.tddKotlin.model.Bird
 import com.example.tddKotlin.model.Season
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ExampleUiState(
@@ -23,10 +25,12 @@ class ExampleViewModel @Inject constructor(
     val uiState: StateFlow<ExampleUiState> = _uiState.asStateFlow()
 
     init {
-        getBirds()
+        viewModelScope.launch {
+            getBirds()
+        }
     }
 
-    private fun getBirds() {
+    private suspend fun getBirds() {
         _uiState.update {
             it.copy(
                 birds = repository.getBirds()

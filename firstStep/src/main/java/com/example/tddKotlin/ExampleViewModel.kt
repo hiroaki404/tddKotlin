@@ -11,24 +11,31 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 data class ExampleUiState(
-    val selectedSeason: Season? = null,
-    val birds: List<Bird> = emptyList()
+    val loading : Boolean,
+    val selectedSeason: Season?,
+    val birds: List<Bird>
 )
 
 @HiltViewModel
 class ExampleViewModel @Inject constructor(
     private val repository: ExampleRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(ExampleUiState())
+    private val _uiState = MutableStateFlow(ExampleUiState(
+        loading = true,
+        selectedSeason = null,
+        birds = emptyList()
+    ))
     val uiState: StateFlow<ExampleUiState> = _uiState.asStateFlow()
 
-    init {
-        getBirds()
-    }
+//    delete this block
+//    init {
+//        getBirds()
+//    }
 
-    private fun getBirds() {
+    fun getBirds() {
         _uiState.update {
             it.copy(
+                loading = false,
                 birds = repository.getBirds()
             )
         }

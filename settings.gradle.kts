@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "tddKotlin"
-include(":app")
+include(":start")

@@ -27,9 +27,23 @@ class ExampleViewModelTest {
     }
 
     @Test
-    fun `鳥を取得できる`() = runTest {
+    fun `初期状態はローディング状態となる`() = runTest {
         assertEquals(
             ExampleUiState(
+                loading = true,
+                selectedSeason = null,
+                birds = emptyList()
+            ),
+            exampleViewModel.uiState.value
+        )
+    }
+
+    @Test
+    fun `鳥を取得できる`() = runTest {
+        exampleViewModel.getBirds()
+        assertEquals(
+            ExampleUiState(
+                loading = false,
                 selectedSeason = null,
                 birds = listOf(
                     suzume,

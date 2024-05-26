@@ -16,6 +16,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -42,6 +43,10 @@ fun ExampleScreen(
     modifier: Modifier = Modifier,
     viewModel: ExampleViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.getBirds()
+    }
+
     val model by viewModel.uiState.collectAsState()
     ExampleScreenContent(modifier = modifier, model = model)
 }
@@ -51,25 +56,29 @@ fun ExampleScreenContent(modifier: Modifier = Modifier, model: ExampleUiState) {
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
-        model.birds.let { birds ->
-            LazyColumn {
-                item {
-                    SeasonSelector(selectedSeason = model.selectedSeason, onSelected = {})
-                    HorizontalDivider()
-                }
-
-                items(birds.size) { index ->
-                    Column {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            val bird = birds[index]
-                            DescriptionSection(bird = bird)
-
-                            ImageSection(bird = bird)
-                        }
+        if (model.loading) {
+            Loading(modifier = Modifier.fillMaxSize())
+        } else {
+            model.birds.let { birds ->
+                LazyColumn {
+                    item {
+                        SeasonSelector(selectedSeason = model.selectedSeason, onSelected = {})
                         HorizontalDivider()
+                    }
+
+                    items(birds.size) { index ->
+                        Column {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                val bird = birds[index]
+                                DescriptionSection(bird = bird)
+
+                                ImageSection(bird = bird)
+                            }
+                            HorizontalDivider()
+                        }
                     }
                 }
             }
@@ -140,6 +149,7 @@ fun Loading(modifier: Modifier = Modifier) {
 @Composable
 fun ExampleScreenPreview() {
     val model = ExampleUiState(
+        loading = false,
         selectedSeason = null,
         birds = listOf(suzume, tsubame, magamo)
     )

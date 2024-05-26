@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 data class ExampleUiState(
-    val selectedBird: Bird? = null,
     val selectedSeason: Season? = null,
     val birds: List<Bird> = emptyList()
 )
@@ -26,7 +25,6 @@ class ExampleViewModel @Inject constructor(
     init {
         getBirds()
     }
-
 
     private fun getBirds() {
         _uiState.update {

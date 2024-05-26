@@ -140,7 +140,6 @@ fun Loading(modifier: Modifier = Modifier) {
 @Composable
 fun ExampleScreenPreview() {
     val model = ExampleUiState(
-        selectedBird = null,
         selectedSeason = null,
         birds = listOf(suzume, tsubame, magamo)
     )

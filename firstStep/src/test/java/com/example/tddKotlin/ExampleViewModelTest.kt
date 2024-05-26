@@ -17,20 +17,33 @@ import org.junit.Test
 class ExampleViewModelTest {
     private val repository = ExampleRepository()
 
-    private lateinit var exampleViewModel: ExampleViewModel
+    private val exampleViewModel = ExampleViewModel(repository)
 
     private val testDispatcher = UnconfinedTestDispatcher()
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        exampleViewModel = ExampleViewModel(repository)
+    }
+
+    @Test
+    fun `初期状態はローディング状態となる`() = runTest {
+        assertEquals(
+            ExampleUiState(
+                loading = true,
+                selectedSeason = null,
+                birds = emptyList()
+            ),
+            exampleViewModel.uiState.value
+        )
     }
 
     @Test
     fun `鳥を取得できる`() = runTest {
+        exampleViewModel.getBirds()
         assertEquals(
             ExampleUiState(
+                loading = false,
                 selectedSeason = null,
                 birds = listOf(
                     suzume,

@@ -32,7 +32,7 @@ class ExampleViewModel @Inject constructor(
 //        getBirds()
 //    }
 
-    fun getBirds() {
+    suspend fun getBirds() {
         _uiState.update {
             it.copy(
                 loading = false,

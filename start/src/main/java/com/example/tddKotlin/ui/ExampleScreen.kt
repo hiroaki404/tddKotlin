@@ -16,18 +16,13 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.example.tddKotlin.not_good.ExampleUiState
-import com.example.tddKotlin.not_good.ExampleViewModel
 import com.example.tddKotlin.R
 import com.example.tddKotlin.model.Bird
 import com.example.tddKotlin.model.Season
@@ -40,21 +35,19 @@ import com.example.tddKotlin.ui.theme.TddKotlinTheme
 @Composable
 fun ExampleScreen(
     modifier: Modifier = Modifier,
-    viewModel: ExampleViewModel = hiltViewModel()
 ) {
-    val model by viewModel.uiState.collectAsState()
-    ExampleScreenContent(modifier = modifier, model = model)
+    ExampleScreenContent(modifier = modifier)
 }
 
 @Composable
-fun ExampleScreenContent(modifier: Modifier = Modifier, model: ExampleUiState) {
+fun ExampleScreenContent(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
-        model.birds.let { birds ->
+        listOf(suzume, tsubame, magamo).let { birds ->
             LazyColumn {
                 item {
-                    SeasonSelector(selectedSeason = model.selectedSeason, onSelected = {})
+                    SeasonSelector(selectedSeason = null, onSelected = {})
                     HorizontalDivider()
                 }
 
@@ -139,12 +132,8 @@ fun Loading(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun ExampleScreenPreview() {
-    val model = ExampleUiState(
-        selectedSeason = null,
-        birds = listOf(suzume, tsubame, magamo)
-    )
     TddKotlinTheme {
-        ExampleScreenContent(model = model)
+        ExampleScreenContent()
     }
 }
 

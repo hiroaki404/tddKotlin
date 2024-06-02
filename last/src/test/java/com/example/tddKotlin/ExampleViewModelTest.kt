@@ -40,7 +40,7 @@ class ExampleViewModelTest {
     }
 
     @Test
-    fun `鳥を取得できる`() = runTest {
+    fun `鳥の一覧を取得できる`() = runTest {
         exampleViewModel.initialize()
 
         repository.emit(listOf(suzume, tsubame, magamo))

@@ -2,9 +2,8 @@ package com.example.tddKotlin.not_good
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tddKotlin.ExampleRepository
+import com.example.tddKotlin.ExampleRepositoryImpl
 import com.example.tddKotlin.model.Bird
-import com.example.tddKotlin.model.Season
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,17 +12,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class ExampleUiState(
-    val selectedSeason: Season? = null,
+data class NgExampleUiState(
     val birds: List<Bird> = emptyList()
 )
 
 @HiltViewModel
-class ExampleViewModel @Inject constructor(
-    private val repository: ExampleRepository
+class NgExampleViewModel @Inject constructor(
+    private val repository: ExampleRepositoryImpl
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(ExampleUiState())
-    val uiState: StateFlow<ExampleUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(NgExampleUiState())
+    val uiState: StateFlow<NgExampleUiState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {

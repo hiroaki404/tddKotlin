@@ -3,6 +3,8 @@ package com.example.tddKotlin
 import com.example.tddKotlin.model.magamo
 import com.example.tddKotlin.model.suzume
 import com.example.tddKotlin.model.tsubame
+import com.example.tddKotlin.not_good.ExampleUiState
+import com.example.tddKotlin.not_good.ExampleViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

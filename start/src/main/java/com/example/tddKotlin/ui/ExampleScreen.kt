@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.example.tddKotlin.ExampleUiState
-import com.example.tddKotlin.ExampleViewModel
+import com.example.tddKotlin.not_good.ExampleUiState
+import com.example.tddKotlin.not_good.ExampleViewModel
 import com.example.tddKotlin.R
 import com.example.tddKotlin.model.Bird
 import com.example.tddKotlin.model.Season

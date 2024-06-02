@@ -1,7 +1,8 @@
-package com.example.tddKotlin
+package com.example.tddKotlin.not_good
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tddKotlin.ExampleRepository
 import com.example.tddKotlin.model.Bird
 import com.example.tddKotlin.model.Season
 import dagger.hilt.android.lifecycle.HiltViewModel

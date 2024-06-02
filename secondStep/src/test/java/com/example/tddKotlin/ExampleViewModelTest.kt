@@ -39,7 +39,7 @@ class ExampleViewModelTest {
     }
 
     @Test
-    fun `鳥を取得できる`() = runTest {
+    fun `鳥の一覧を取得できる`() = runTest {
         exampleViewModel.getBirds()
         assertEquals(
             ExampleUiState(

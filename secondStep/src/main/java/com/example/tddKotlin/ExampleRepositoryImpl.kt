@@ -1,15 +1,12 @@
 package com.example.tddKotlin
 
 import com.example.tddKotlin.model.Bird
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import com.example.tddKotlin.model.magamo
+import com.example.tddKotlin.model.suzume
+import com.example.tddKotlin.model.tsubame
 
 class ExampleRepository {
-    val flow = MutableSharedFlow<List<Bird>>()
-
-    val birdsFlow: Flow<List<Bird>> = flow
-
-    suspend fun emit(value: List<Bird>) {
-        flow.emit(value)
+    suspend fun getBirds(): List<Bird> {
+        return listOf(suzume, tsubame, magamo)
     }
 }

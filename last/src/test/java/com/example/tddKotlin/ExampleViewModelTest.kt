@@ -1,5 +1,6 @@
 package com.example.tddKotlin
 
+import com.example.tddKotlin.model.Season
 import com.example.tddKotlin.model.magamo
 import com.example.tddKotlin.model.suzume
 import com.example.tddKotlin.model.tsubame
@@ -40,7 +41,9 @@ class ExampleViewModelTest {
 
     @Test
     fun `鳥を取得できる`() = runTest {
-        exampleViewModel.getBirds()
+        exampleViewModel.initialize()
+
+        repository.emit(listOf(suzume, tsubame, magamo))
         assertEquals(
             ExampleUiState(
                 loading = false,
@@ -54,4 +57,26 @@ class ExampleViewModelTest {
             exampleViewModel.uiState.value
         )
     }
+
+    @Test
+    fun `鳥を季節でフィルタリングできる`() = runTest {
+        exampleViewModel.initialize()
+
+        repository.emit(listOf(suzume, tsubame, magamo))
+        exampleViewModel.selectSeason(Season.SPRING)
+
+        repository.emit(listOf(suzume, tsubame, magamo))
+        assertEquals(
+            ExampleUiState(
+                loading = false,
+                selectedSeason = Season.SPRING,
+                birds = listOf(
+                    suzume,
+                    tsubame
+                )
+            ),
+            exampleViewModel.uiState.value
+        )
+    }
+
 }

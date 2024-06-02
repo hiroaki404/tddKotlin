@@ -23,3 +23,4 @@ rootProject.name = "tddKotlin"
 include(":start")
 include(":firstStep")
 include(":secondStep")
+include(":last")

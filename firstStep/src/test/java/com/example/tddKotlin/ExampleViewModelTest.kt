@@ -3,6 +3,8 @@ package com.example.tddKotlin
 import com.example.tddKotlin.model.magamo
 import com.example.tddKotlin.model.suzume
 import com.example.tddKotlin.model.tsubame
+import com.example.tddKotlin.not_good.ExampleUiState
+import com.example.tddKotlin.not_good.ExampleViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -17,33 +19,20 @@ import org.junit.Test
 class ExampleViewModelTest {
     private val repository = ExampleRepository()
 
-    private val exampleViewModel = ExampleViewModel(repository)
+    private lateinit var exampleViewModel: ExampleViewModel
 
     private val testDispatcher = UnconfinedTestDispatcher()
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-    }
-
-    @Test
-    fun `初期状態はローディング状態となる`() = runTest {
-        assertEquals(
-            ExampleUiState(
-                loading = true,
-                selectedSeason = null,
-                birds = emptyList()
-            ),
-            exampleViewModel.uiState.value
-        )
+        exampleViewModel = ExampleViewModel(repository)
     }
 
     @Test
     fun `鳥を取得できる`() = runTest {
-        exampleViewModel.getBirds()
         assertEquals(
             ExampleUiState(
-                loading = false,
                 selectedSeason = null,
                 birds = listOf(
                     suzume,

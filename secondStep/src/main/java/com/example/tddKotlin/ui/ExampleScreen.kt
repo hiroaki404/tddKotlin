@@ -44,7 +44,7 @@ fun ExampleScreen(
     viewModel: ExampleViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
-        viewModel.getBirds()
+//        viewModel.getBirds()
     }
 
     val model by viewModel.uiState.collectAsState()

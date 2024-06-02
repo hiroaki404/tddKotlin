@@ -16,6 +16,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -26,8 +27,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.example.tddKotlin.not_good.ExampleUiState
-import com.example.tddKotlin.not_good.ExampleViewModel
+import com.example.tddKotlin.ExampleUiState
+import com.example.tddKotlin.ExampleViewModel
 import com.example.tddKotlin.R
 import com.example.tddKotlin.model.Bird
 import com.example.tddKotlin.model.Season
@@ -42,6 +43,11 @@ fun ExampleScreen(
     modifier: Modifier = Modifier,
     viewModel: ExampleViewModel = hiltViewModel()
 ) {
+    // 画面が表示されるたびにデータを取得します
+    LaunchedEffect(Unit) {
+        viewModel.refresh()
+    }
+
     val model by viewModel.uiState.collectAsState()
     ExampleScreenContent(modifier = modifier, model = model)
 }
@@ -54,7 +60,7 @@ fun ExampleScreenContent(modifier: Modifier = Modifier, model: ExampleUiState) {
         model.birds.let { birds ->
             LazyColumn {
                 item {
-                    SeasonSelector(selectedSeason = model.selectedSeason, onSelected = {})
+                    SeasonSelector(selectedSeason = null, onSelected = {})
                     HorizontalDivider()
                 }
 
@@ -140,7 +146,6 @@ fun Loading(modifier: Modifier = Modifier) {
 @Composable
 fun ExampleScreenPreview() {
     val model = ExampleUiState(
-        selectedSeason = null,
         birds = listOf(suzume, tsubame, magamo)
     )
     TddKotlinTheme {

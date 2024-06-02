@@ -12,6 +12,14 @@ object BirdModule {
     @Singleton
     @Provides
     fun provideRepository(): ExampleRepository {
-        return ExampleRepository()
+        return ExampleRepositoryImpl()
+    }
+
+
+    // NGパターン向け
+    @Singleton
+    @Provides
+    fun provideRepositoryImpl(): ExampleRepositoryImpl {
+        return ExampleRepositoryImpl()
     }
 }

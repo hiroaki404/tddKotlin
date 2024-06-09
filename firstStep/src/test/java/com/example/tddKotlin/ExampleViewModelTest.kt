@@ -17,13 +17,14 @@ import org.junit.Test
 class ExampleViewModelTest {
     private val repository = FakeRepository()
 
-    private val exampleViewModel= ExampleViewModel(repository)
+    private lateinit var exampleViewModel: ExampleViewModel
 
     private val testDispatcher = UnconfinedTestDispatcher()
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
+        exampleViewModel = ExampleViewModel(repository)
     }
 
     @Test

@@ -12,16 +12,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ExampleUiState(
-    val birds: List<Bird>
+    val birds: List<Bird> = emptyList()
 )
 
 @HiltViewModel
 class ExampleViewModel @Inject constructor(
     private val repository: ExampleRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(ExampleUiState(
-        birds = emptyList()
-    ))
+    private val _uiState = MutableStateFlow(ExampleUiState())
     val uiState: StateFlow<ExampleUiState> = _uiState.asStateFlow()
 
     fun refresh() {

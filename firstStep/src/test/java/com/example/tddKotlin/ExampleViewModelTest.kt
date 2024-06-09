@@ -15,7 +15,7 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 @Suppress("RemoveRedundantBackticks", "NonAsciiCharacters")
 class ExampleViewModelTest {
-    private val repository = ExampleRepositoryImpl()
+    private val repository = FakeRepository()
 
     private val exampleViewModel= ExampleViewModel(repository)
 

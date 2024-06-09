@@ -5,8 +5,12 @@ import com.example.tddKotlin.model.magamo
 import com.example.tddKotlin.model.suzume
 import com.example.tddKotlin.model.tsubame
 
-class ExampleRepository {
-    suspend fun getBirds(): List<Bird> {
+interface ExampleRepository {
+    suspend fun getBirds(): List<Bird>
+}
+
+class ExampleRepositoryImpl : ExampleRepository {
+    override suspend fun getBirds(): List<Bird> {
         return listOf(suzume, tsubame, magamo)
     }
 }

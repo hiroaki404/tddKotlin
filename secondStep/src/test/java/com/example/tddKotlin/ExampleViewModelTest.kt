@@ -15,9 +15,9 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 @Suppress("RemoveRedundantBackticks", "NonAsciiCharacters")
 class ExampleViewModelTest {
-    private val repository = ExampleRepository()
+    private val repository = ExampleRepositoryImpl()
 
-    private val exampleViewModel = ExampleViewModel(repository)
+    private val exampleViewModel= ExampleViewModel(repository)
 
     private val testDispatcher = UnconfinedTestDispatcher()
 
@@ -31,7 +31,6 @@ class ExampleViewModelTest {
         assertEquals(
             ExampleUiState(
                 loading = true,
-                selectedSeason = null,
                 birds = emptyList()
             ),
             exampleViewModel.uiState.value
@@ -40,11 +39,11 @@ class ExampleViewModelTest {
 
     @Test
     fun `鳥の一覧を取得できる`() = runTest {
-        exampleViewModel.getBirds()
+        exampleViewModel.refresh()
+
         assertEquals(
             ExampleUiState(
                 loading = false,
-                selectedSeason = null,
                 birds = listOf(
                     suzume,
                     tsubame,

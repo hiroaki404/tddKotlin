@@ -2,7 +2,7 @@ package com.example.tddKotlin.not_good
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tddKotlin.ExampleRepositoryImpl
+import com.example.tddKotlin.NgExampleRepositoryImpl
 import com.example.tddKotlin.model.Bird
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +18,7 @@ class NgExampleViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(NgExampleUiState())
     val uiState: StateFlow<NgExampleUiState> = _uiState.asStateFlow()
 
-    private val repository: ExampleRepositoryImpl = ExampleRepositoryImpl()
+    private val repository: NgExampleRepositoryImpl = NgExampleRepositoryImpl()
 
     init {
         viewModelScope.launch {

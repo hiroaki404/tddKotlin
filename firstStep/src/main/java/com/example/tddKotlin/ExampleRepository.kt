@@ -10,9 +10,17 @@ interface ExampleRepository {
 }
 
 // ngパターン用
-class ExampleRepositoryImpl {
+class NgExampleRepositoryImpl {
     suspend fun getBirds(): List<Bird> {
-        TODO("Not yet implemented")
+        // 実際はDataSourceから取得する
+        return listOf(suzume, tsubame, magamo)
+    }
+}
+
+class ExampleRepositoryImpl : ExampleRepository {
+    override suspend fun getBirds(): List<Bird> {
+        // 実際はDataSourceから取得する
+        return listOf(suzume, tsubame, magamo)
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.tddKotlin
 
+import app.cash.turbine.test
 import com.example.tddKotlin.model.magamo
 import com.example.tddKotlin.model.suzume
 import com.example.tddKotlin.model.tsubame
@@ -15,42 +16,52 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 @Suppress("RemoveRedundantBackticks", "NonAsciiCharacters")
 class ExampleViewModelTest {
-    private val repository = ExampleRepositoryImpl()
+    private val repository = FakeRepository()
 
-    private val exampleViewModel= ExampleViewModel(repository)
+    private lateinit var exampleViewModel: ExampleViewModel
 
     private val testDispatcher = UnconfinedTestDispatcher()
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
+        exampleViewModel = ExampleViewModel(repository)
+
     }
 
     @Test
     fun `初期状態はローディング状態となる`() = runTest {
-        assertEquals(
-            ExampleUiState(
-                loading = true,
-                birds = emptyList()
-            ),
-            exampleViewModel.uiState.value
-        )
+        exampleViewModel.uiState.test {
+            assertEquals(
+                ExampleUiState(
+                    loading = true,
+                    birds = emptyList()
+                ),
+                awaitItem()
+            )
+        }
     }
 
     @Test
     fun `鳥の一覧を取得できる`() = runTest {
-        exampleViewModel.refresh()
+        exampleViewModel.uiState.test {
+            // Given
+            skipItems(1)
 
-        assertEquals(
-            ExampleUiState(
-                loading = false,
-                birds = listOf(
-                    suzume,
-                    tsubame,
-                    magamo
-                )
-            ),
-            exampleViewModel.uiState.value
-        )
+            // When
+            repository.emitValue()
+
+            // Then
+            assertEquals(
+                ExampleUiState(
+                    birds = listOf(
+                        suzume,
+                        tsubame,
+                        magamo
+                    )
+                ),
+                awaitItem()
+            )
+        }
     }
 }

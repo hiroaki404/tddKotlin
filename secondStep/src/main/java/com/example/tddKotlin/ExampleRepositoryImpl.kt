@@ -9,13 +9,6 @@ interface ExampleRepository {
     suspend fun getBirds(): List<Bird>
 }
 
-// ngパターン用
-class ExampleRepositoryImpl {
-    suspend fun getBirds(): List<Bird> {
-        TODO("Not yet implemented")
-    }
-}
-
 // 実際にはテストモジュールなどへの配置を推奨
 class FakeRepository : ExampleRepository {
     override suspend fun getBirds(): List<Bird> {

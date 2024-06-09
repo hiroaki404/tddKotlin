@@ -43,8 +43,9 @@ fun ExampleScreen(
     modifier: Modifier = Modifier,
     viewModel: ExampleViewModel = hiltViewModel()
 ) {
+    // 画面が表示されるたびにデータを取得します
     LaunchedEffect(Unit) {
-        viewModel.getBirds()
+        viewModel.refresh()
     }
 
     val model by viewModel.uiState.collectAsState()
@@ -62,7 +63,7 @@ fun ExampleScreenContent(modifier: Modifier = Modifier, model: ExampleUiState) {
             model.birds.let { birds ->
                 LazyColumn {
                     item {
-                        SeasonSelector(selectedSeason = model.selectedSeason, onSelected = {})
+                        SeasonSelector(selectedSeason = null, onSelected = {})
                         HorizontalDivider()
                     }
 
@@ -150,7 +151,6 @@ fun Loading(modifier: Modifier = Modifier) {
 fun ExampleScreenPreview() {
     val model = ExampleUiState(
         loading = false,
-        selectedSeason = null,
         birds = listOf(suzume, tsubame, magamo)
     )
     TddKotlinTheme {

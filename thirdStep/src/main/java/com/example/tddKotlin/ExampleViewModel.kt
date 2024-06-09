@@ -1,26 +1,32 @@
-package com.example.tddKotlin.not_good
+package com.example.tddKotlin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tddKotlin.NgExampleRepositoryImpl
 import com.example.tddKotlin.model.Bird
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-data class NgExampleUiState(
-    val birds: List<Bird> = emptyList()
+data class ExampleUiState(
+    val loading : Boolean,
+    val birds: List<Bird>
 )
 
-class NgExampleViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(NgExampleUiState())
-    val uiState: StateFlow<NgExampleUiState> = _uiState.asStateFlow()
+@HiltViewModel
+class ExampleViewModel @Inject constructor(
+    private val repository: ExampleRepository
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(ExampleUiState(
+        loading = true,
+        birds = emptyList()
+    ))
+    val uiState: StateFlow<ExampleUiState> = _uiState.asStateFlow()
 
-    private val repository: NgExampleRepositoryImpl = NgExampleRepositoryImpl()
-
-    init {
+    fun refresh() {
         viewModelScope.launch {
             getBirds()
         }
@@ -29,6 +35,7 @@ class NgExampleViewModel : ViewModel() {
     private suspend fun getBirds() {
         _uiState.update {
             it.copy(
+                loading = false,
                 birds = repository.getBirds()
             )
         }

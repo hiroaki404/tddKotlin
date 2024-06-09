@@ -12,6 +12,6 @@ object BirdModule {
     @Singleton
     @Provides
     fun provideRepository(): ExampleRepository {
-        return FakeRepository()
+        return ExampleRepositoryImpl()
     }
 }

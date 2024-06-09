@@ -16,7 +16,6 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -43,11 +42,6 @@ fun ExampleScreen(
     modifier: Modifier = Modifier,
     viewModel: ExampleViewModel = hiltViewModel()
 ) {
-    // 画面が表示されるたびにデータを取得します
-    LaunchedEffect(Unit) {
-        viewModel.refresh()
-    }
-
     val model by viewModel.uiState.collectAsState()
     ExampleScreenContent(modifier = modifier, model = model)
 }

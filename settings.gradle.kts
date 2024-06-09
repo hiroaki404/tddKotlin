@@ -22,5 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "tddKotlin"
 include(":start")
 include(":firstStep")
-include(":secondStep")
+include(":thirdStep")
 include(":last")

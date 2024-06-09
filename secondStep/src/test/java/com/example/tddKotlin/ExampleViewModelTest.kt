@@ -1,5 +1,6 @@
 package com.example.tddKotlin
 
+import app.cash.turbine.test
 import com.example.tddKotlin.model.magamo
 import com.example.tddKotlin.model.suzume
 import com.example.tddKotlin.model.tsubame
@@ -50,5 +51,29 @@ class ExampleViewModelTest {
             exampleViewModel.uiState.value
         )
         collectJob.cancel()
+    }
+
+
+    @Test
+    fun `鳥の一覧を取得できる(turbineを使った場合)`() = runTest {
+        exampleViewModel.uiState.test {
+            // Given
+            skipItems(1)
+
+            // When
+            repository.emitValue()
+
+            // Then
+            assertEquals(
+                ExampleUiState(
+                    birds = listOf(
+                        suzume,
+                        tsubame,
+                        magamo
+                    )
+                ),
+                awaitItem()
+            )
+        }
     }
 }

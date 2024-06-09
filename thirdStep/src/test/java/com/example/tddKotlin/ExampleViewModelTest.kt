@@ -26,7 +26,6 @@ class ExampleViewModelTest {
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         exampleViewModel = ExampleViewModel(repository)
-
     }
 
     @Test

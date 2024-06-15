@@ -22,15 +22,11 @@ class NgExampleViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            getBirds()
-        }
-    }
-
-    private suspend fun getBirds() {
-        _uiState.update {
-            it.copy(
-                birds = repository.getBirds()
-            )
+            _uiState.update {
+                it.copy(
+                    birds = repository.getBirds()
+                )
+            }
         }
     }
 }

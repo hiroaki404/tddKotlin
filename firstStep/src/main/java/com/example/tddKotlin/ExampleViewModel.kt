@@ -24,15 +24,11 @@ class ExampleViewModel @Inject constructor(
 
     fun refresh() {
         viewModelScope.launch {
-            getBirds()
-        }
-    }
-
-    private suspend fun getBirds() {
-        _uiState.update {
-            it.copy(
-                birds = repository.getBirds()
-            )
+            _uiState.update {
+                it.copy(
+                    birds = repository.getBirds()
+                )
+            }
         }
     }
 }

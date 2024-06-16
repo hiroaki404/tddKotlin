@@ -43,24 +43,33 @@ fun ExampleScreen(
     viewModel: ExampleViewModel = hiltViewModel()
 ) {
     val model by viewModel.uiState.collectAsState()
-    ExampleScreenContent(modifier = modifier, model = model)
+    ExampleScreenContent(
+        modifier = modifier,
+        model = model,
+        onSelected = { viewModel.queryBySeason(it) })
 }
 
 @Composable
-fun ExampleScreenContent(modifier: Modifier = Modifier, model: ExampleUiState) {
+fun ExampleScreenContent(
+    modifier: Modifier = Modifier,
+    model: ExampleUiState,
+    onSelected: (Season) -> Unit = {}
+) {
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
         if (model.loading) {
             Loading(modifier = Modifier.fillMaxSize())
         } else {
-            model.birds.let { birds ->
-                LazyColumn {
-                    item {
-                        SeasonSelector(selectedSeason = null, onSelected = {})
-                        HorizontalDivider()
-                    }
+            LazyColumn {
+                item {
+                    SeasonSelector(
+                        selectedSeason = model.selectedSeason,
+                        onSelected = { onSelected(it) })
+                    HorizontalDivider()
+                }
 
+                model.birds.let { birds ->
                     items(birds.size) { index ->
                         Column {
                             Row(
@@ -100,7 +109,7 @@ fun SeasonSelector(selectedSeason: Season?, onSelected: (Season) -> Unit = {}) {
 fun RowScope.SeasonRadioButton(selectedSeason: Season?, season: Season, onSelected: () -> Unit) {
     Text(season.value)
     RadioButton(
-        selected = selectedSeason == Season.WINTER,
+        selected = selectedSeason == season,
         onClick = onSelected
     )
 }

@@ -36,7 +36,7 @@ class ExampleViewModelTest {
                 ExampleUiState(
                     loading = true,
                     birds = emptyList(),
-                    selectedSeason = Season.SPRING
+                    selectedSeason = null
                 ),
                 awaitItem()
             )
@@ -61,7 +61,7 @@ class ExampleViewModelTest {
                         tsubame,
                         magamo
                     ),
-                    selectedSeason = Season.SPRING
+                    selectedSeason = null
                 ),
                 awaitItem()
             )

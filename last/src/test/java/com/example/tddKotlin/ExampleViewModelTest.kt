@@ -1,6 +1,7 @@
 package com.example.tddKotlin
 
 import app.cash.turbine.test
+import com.example.tddKotlin.model.Season
 import com.example.tddKotlin.model.magamo
 import com.example.tddKotlin.model.suzume
 import com.example.tddKotlin.model.tsubame
@@ -34,7 +35,8 @@ class ExampleViewModelTest {
             assertEquals(
                 ExampleUiState(
                     loading = true,
-                    birds = emptyList()
+                    birds = emptyList(),
+                    selectedSeason = Season.SPRING
                 ),
                 awaitItem()
             )
@@ -53,10 +55,37 @@ class ExampleViewModelTest {
             // Then
             assertEquals(
                 ExampleUiState(
+                    loading = false,
                     birds = listOf(
                         suzume,
                         tsubame,
                         magamo
+                    ),
+                    selectedSeason = Season.SPRING
+                ),
+                awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `鳥を季節でクエリーできる`() = runTest {
+        exampleViewModel.uiState.test {
+            // Given
+            repository.emitValue()
+            skipItems(2)
+
+            // When
+            exampleViewModel.queryBySeason(Season.SPRING)
+
+            // Then
+            assertEquals(
+                ExampleUiState(
+                    loading = false,
+                    selectedSeason = Season.SPRING,
+                    birds = listOf(
+                        suzume,
+                        tsubame
                     )
                 ),
                 awaitItem()

@@ -145,7 +145,8 @@ fun Loading(modifier: Modifier = Modifier) {
 fun ExampleScreenPreview() {
     val model = ExampleUiState(
         loading = false,
-        birds = listOf(suzume, tsubame, magamo)
+        birds = listOf(suzume, tsubame, magamo),
+        selectedSeason = Season.SPRING
     )
     TddKotlinTheme {
         ExampleScreenContent(model = model)

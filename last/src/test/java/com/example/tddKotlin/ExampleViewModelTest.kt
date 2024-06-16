@@ -69,7 +69,7 @@ class ExampleViewModelTest {
     }
 
     @Test
-    fun `鳥を季節でクエリーできる`() = runTest {
+    fun `鳥を春の季節でクエリーできる`() = runTest {
         exampleViewModel.uiState.test {
             // Given
             repository.emitValue()
@@ -86,6 +86,32 @@ class ExampleViewModelTest {
                     birds = listOf(
                         suzume,
                         tsubame
+                    )
+                ),
+                awaitItem()
+            )
+        }
+    }
+
+    // 不安な場合はテストを追加してもよい
+    @Test
+    fun `鳥を冬の季節でクエリーできる`() = runTest {
+        exampleViewModel.uiState.test {
+            // Given
+            repository.emitValue()
+            skipItems(2)
+
+            // When
+            exampleViewModel.queryBySeason(Season.WINTER)
+
+            // Then
+            assertEquals(
+                ExampleUiState(
+                    loading = false,
+                    selectedSeason = Season.WINTER,
+                    birds = listOf(
+                        suzume,
+                        magamo
                     )
                 ),
                 awaitItem()

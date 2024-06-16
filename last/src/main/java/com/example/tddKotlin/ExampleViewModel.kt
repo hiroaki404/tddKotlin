@@ -18,7 +18,7 @@ import javax.inject.Inject
 data class ExampleUiState(
     val loading: Boolean = true,
     val birds: List<Bird> = emptyList(),
-    val selectedSeason: Season
+    val selectedSeason: Season?
 )
 
 @HiltViewModel
@@ -40,12 +40,12 @@ class ExampleViewModel @Inject constructor(
         ExampleUiState(
             loading = it.isEmpty(),
             birds = it,
-            selectedSeason = querySeasonFlow.value ?: Season.SPRING
+            selectedSeason = querySeasonFlow.value
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = ExampleUiState(selectedSeason = Season.SPRING)
+        initialValue = ExampleUiState(selectedSeason = null)
     )
 
     fun queryBySeason(season: Season) {

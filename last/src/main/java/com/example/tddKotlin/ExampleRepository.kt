@@ -9,10 +9,15 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 
 interface ExampleRepository {
+    suspend fun refresh()
+
     val birdsFlow: Flow<List<Bird>>
 }
 
 class ExampleRepositoryImpl : ExampleRepository {
+    override suspend fun refresh() {
+    }
+
     override val birdsFlow: Flow<List<Bird>> = flow {
         // 実際はDataSourceから取得する
         emit(
@@ -28,6 +33,9 @@ class ExampleRepositoryImpl : ExampleRepository {
 // 実際にはテストモジュールなどへの配置を推奨
 class FakeRepository : ExampleRepository {
     private val flow = MutableSharedFlow<List<Bird>>()
+    override suspend fun refresh() {
+        emitValue()
+    }
 
     override val birdsFlow: Flow<List<Bird>> = flow
 

@@ -53,6 +53,7 @@ class ExampleViewModelTest {
             // Then
             assertEquals(
                 ExampleUiState(
+                    loading = false,
                     birds = listOf(
                         suzume,
                         tsubame,

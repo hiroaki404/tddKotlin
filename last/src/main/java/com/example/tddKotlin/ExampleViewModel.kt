@@ -5,10 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.tddKotlin.model.Bird
 import com.example.tddKotlin.model.Season
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 // sealed classでLoadingとSuccessを定義しても良い
@@ -20,29 +23,32 @@ data class ExampleUiState(
 
 @HiltViewModel
 class ExampleViewModel @Inject constructor(
-    private val repository: ExampleRepository
+    repository: ExampleRepository
 ) : ViewModel() {
-    private var querySeason: Season? = null
+    private val querySeasonFlow: MutableStateFlow<Season?> = MutableStateFlow(null)
 
-    val uiState: StateFlow<ExampleUiState> = repository.birdsFlow
-        .map {
-            if (querySeason == null) {
-                it
-            } else {
-                it.filter { it.seasons.contains(querySeason) }
-            }
+    val uiState: StateFlow<ExampleUiState> = combine(
+        querySeasonFlow,
+        repository.birdsFlow
+    ) { querySeason, birds ->
+        if (querySeason == null) {
+            birds
+        } else {
+            birds.filter { it.seasons.contains(querySeason) }
         }
-        .map {
-            ExampleUiState(loading = false, birds = it, selectedSeason = Season.SPRING)
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = ExampleUiState(selectedSeason = Season.SPRING)
+    }.map {
+        ExampleUiState(
+            loading = it.isEmpty(),
+            birds = it,
+            selectedSeason = querySeasonFlow.value ?: Season.SPRING
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = ExampleUiState(selectedSeason = Season.SPRING)
+    )
 
-    suspend fun queryBySeason(season: Season) {
-        querySeason = season
-        repository.refresh()
+    fun queryBySeason(season: Season) {
+        querySeasonFlow.update { season }
     }
 }

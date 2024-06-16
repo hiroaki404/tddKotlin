@@ -22,7 +22,7 @@ class ExampleViewModel @Inject constructor(
 ) : ViewModel() {
     val uiState: StateFlow<ExampleUiState> = repository.birdsFlow
         .map {
-            ExampleUiState(birds = it)
+            ExampleUiState(loading = false, birds = it)
         }
         .stateIn(
             scope = viewModelScope,

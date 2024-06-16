@@ -3,7 +3,7 @@ package com.example.tddKotlin.model
 data class Bird(
     val name: String,
     val height: Float,
-    val season: List<Season>,
+    val seasons: List<Season>,
     val imageUrl: String
 )
 

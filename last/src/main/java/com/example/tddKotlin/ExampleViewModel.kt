@@ -29,7 +29,7 @@ class ExampleViewModel @Inject constructor(
             if (querySeason == null) {
                 it
             } else {
-                it.filter { it.season.contains(querySeason) }
+                it.filter { it.seasons.contains(querySeason) }
             }
         }
         .map {

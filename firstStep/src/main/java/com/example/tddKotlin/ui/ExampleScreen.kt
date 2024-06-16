@@ -113,7 +113,7 @@ fun DescriptionSection(modifier: Modifier = Modifier, bird: Bird) {
         Text(bird.name)
         Text("${bird.height} cm")
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            bird.season.forEach {
+            bird.seasons.forEach {
                 Surface(
                     color = Color.Green.copy(alpha = 0.3f),
                     shape = CircleShape

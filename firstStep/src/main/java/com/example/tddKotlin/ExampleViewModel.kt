@@ -24,9 +24,10 @@ class ExampleViewModel @Inject constructor(
 
     fun refresh() {
         viewModelScope.launch {
+            val birds = repository.getBirds()
             _uiState.update {
                 it.copy(
-                    birds = repository.getBirds()
+                    birds = birds
                 )
             }
         }

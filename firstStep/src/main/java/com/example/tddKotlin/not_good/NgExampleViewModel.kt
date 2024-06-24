@@ -22,9 +22,10 @@ class NgExampleViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
+            val birds = repository.getBirds()
             _uiState.update {
                 it.copy(
-                    birds = repository.getBirds()
+                    birds = birds
                 )
             }
         }
